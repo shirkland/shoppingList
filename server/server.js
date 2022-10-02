@@ -51,6 +51,16 @@ app.post("/add-need", jsonParser, (req, res) => {
     res.send("anything");
 });
 
+app.delete("/delete-row/:id", (req, res) => {
+    console.log(JSON.stringify(req.params.id));
+
+    let connector = mysql2.createConnection(options);
+
+    connector.connect(function (err) {
+        if (err) throw err;
+        connector.query(`DELETE FROM needs WHERE id=${req.params.id}`);
+    });
+});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

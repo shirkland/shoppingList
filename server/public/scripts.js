@@ -21,7 +21,7 @@ let submitItem = () => {
             "Content-Type": "application/json",
             Accepts: "application/json",
         },
-    }).then(setTimeout(populateTable, 2000));
+    }).then(setTimeout(populateTable, 200));
 };
 
 logButton.addEventListener("click", submitItem);
@@ -45,13 +45,15 @@ let populateTable = async () => {
 window.addEventListener("load", populateTable);
 
 const deleteHandler = (event) => {
-    console.log(event.target.parentNode.id);
+    fetch(`/delete-row/${event.target.parentNode.id}`, {
+        method: "DELETE",
+    }).then(setTimeout(populateTable, 200));
 };
 
 const rowMaker = (rowData) => {
     let newRow = document.createElement("tr");
     newRow.setAttribute("id", rowData.id);
-    newRow.addEventListener("click", deleteHandler);
+    newRow.addEventListener("dblclick", deleteHandler);
     let values = Object.entries(rowData);
     console.log(values);
     values.forEach((value) => {

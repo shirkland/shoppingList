@@ -9,9 +9,9 @@ const port = 3000;
 const jsonParser = bodyParser.json();
 let mysql2 = require("mysql2");
 const options = {
-    host: "10.0.4.47",
+    host: "localhost",
     user: "root",
-    password: "wordpass",
+    password: "Wordpass666!",
     database: "shoplist",
 };
 
@@ -31,7 +31,7 @@ app.get("/get-needs", (req, res) => {
 
 app.post("/add-need", jsonParser, (req, res) => {
     let newData = req.body;
-    let newArr = [newData.item, newData.quantity];
+    let newArr = [newData.item];
 
     let connector = mysql2.createConnection(options);
 
@@ -39,7 +39,7 @@ app.post("/add-need", jsonParser, (req, res) => {
         if (err) throw err;
         console.log("Connected!");
         connector.query(
-            "INSERT INTO needs(item, quantity) VALUES (?,?)",
+            "INSERT INTO needs(item) VALUES (?)",
             newArr,
             function (err, result) {
                 if (err) throw err;
